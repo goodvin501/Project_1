@@ -24,6 +24,13 @@ class MainWindow(ttk.Window):
         )
         self.button_add_new_expense.place(x=20, y=590, width=270)
 
+        self.button_delete_expense = ttk.Button(
+            self,
+            text="Delete chosen expense",
+            command=self.delete_expense
+        )
+        self.button_delete_expense.place(x=300, y=590, width=270)
+
 
         self.list_of_expenses = tk.Listbox(self)
         self.list_of_expenses.place(x=20, y=50)
@@ -58,3 +65,7 @@ class MainWindow(ttk.Window):
             self.created_window.destroy()
         except Exception as err:
             self.error_window = ErrorWindow(err)
+    def delete_expense(self):
+        self.row_obj = self.dt.get_rows(selected=True)
+        self.dt.hide_selected_rows()
+        self.expenses.delete_expense(id=self.row_obj[0].values[0])

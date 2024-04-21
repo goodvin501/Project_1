@@ -24,6 +24,10 @@ class Expenses():
             raise TypeError("Invalid amount")
         if category == '':
             raise ValueError("Category is not selected")
+        
+    def delete_expense(self, id):
+        self.cursor.execute("DELETE FROM expenses WHERE id = ?;", [id])
+        self.conn.commit()
 
     def get_categories(self):
         self.cursor.execute("SELECT DISTINCT category FROM expenses")
