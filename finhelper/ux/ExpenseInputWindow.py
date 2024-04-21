@@ -3,10 +3,9 @@ from tkinter import ttk
 
 class ExpenseInputWindow(tk.Toplevel):
 
-    def __init__(self, categories=[], callback=None, callback_2=None):
+    def __init__(self, categories=[], callback=None):
         super().__init__()
         self.callback = callback
-        self.callback_2 = callback_2
         self.config(width=700, height=700)
         self.resizable(0, 0)
         self.title("Enter Expense")
@@ -45,7 +44,7 @@ class ExpenseInputWindow(tk.Toplevel):
             text="Submit",
             command=self.button_submit_pressed
         )
-        self.button_submit.place(x=20, y=110, width=220)
+        self.button_submit.place(x=20, y=120, width=210)
 
         #close button
         self.button_exit = ttk.Button(
@@ -53,12 +52,11 @@ class ExpenseInputWindow(tk.Toplevel):
             text="Close",
             command=self.button_close_pressed
         )
-        self.button_exit.place(x=260, y=110, width=120)
+        self.button_exit.place(x=260, y=120, width=110)
 
 
     def button_submit_pressed(self):
         self.callback(description=self.expense_description.get(), amount=self.expense_amount.get(), category=self.expense_category.get())
-        self.callback_2()
 
     def button_close_pressed(self):
         self.destroy()
