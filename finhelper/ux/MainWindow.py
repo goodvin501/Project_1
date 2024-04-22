@@ -66,6 +66,7 @@ class MainWindow(ttk.Window):
         except Exception as err:
             self.error_window = ErrorWindow(err)
     def delete_expense(self):
-        self.row_obj = self.dt.get_rows(selected=True)
-        self.dt.hide_selected_rows()
-        self.expenses.delete_expense(id=self.row_obj[0].values[0])
+        lst = self.dt.get_rows(selected=True)
+        self.dt.delete_rows(iids=list(map(lambda el: el.iid, lst)))
+        for el in lst:
+            self.expenses.delete_expense(id=el.values[0])
