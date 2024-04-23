@@ -1,5 +1,6 @@
 from ux.ErrorWindow import ErrorWindow
 from ux.ExpenseInputWindow import ExpenseInputWindow
+from ux.PieChartWindow import PieCahrt
 
 import tkinter as tk
 import ttkbootstrap as ttk
@@ -30,6 +31,13 @@ class MainWindow(ttk.Window):
             command=self.delete_expense
         )
         self.button_delete_expense.place(x=300, y=590, width=270)
+
+        self.button_expenses_per_cat = ttk.Button(
+            self,
+            text="Show expenses per categories",
+            command=self.show_expenses_per_cat
+        )
+        self.button_expenses_per_cat.place(x=20, y=625, width=270)
 
 
         self.list_of_expenses = tk.Listbox(self)
@@ -70,3 +78,15 @@ class MainWindow(ttk.Window):
         self.dt.delete_rows(iids=list(map(lambda el: el.iid, lst)))
         for el in lst:
             self.expenses.delete_expense(id=el.values[0])
+
+    def show_expenses_per_cat(self):
+        self.exp_per_cat = []
+        self.labels = []
+        for cat in self.expenses.get_categories():
+            self.labels.append(cat[0])
+            exp = 0
+            lst = self.expenses.get_expenses_per_category(cat[0])
+            for el in lst:
+                exp =  exp + el[0]
+            self.exp_per_cat.append(exp)
+        self.pie_chart_window = PieCahrt(sizes=self.exp_per_cat, labels=self.labels)
