@@ -1,62 +1,37 @@
+# Import Required Module
 from tkinter import *
-from matplotlib.figure import Figure 
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, 
-NavigationToolbar2Tk) 
+from tkinter.ttk import *
+import ttkbootstrap as ttk
 
-# plot function is created for 
-# plotting the graph in 
-# tkinter window 
-def plot(): 
+# Create Object
+root = Tk()
 
-	# the figure that will contain the plot 
-	fig = Figure(figsize = (5, 5), 
-				dpi = 100) 
+# Set geometry (widthxheight)
+root.geometry('100x100')
 
-	# list of squares 
-	y = [i**2 for i in range(101)] 
+# This will create style object
+style = Style()
 
-	# adding the subplot 
-	plot1 = fig.add_subplot(111) 
+# This will be adding style, and 
+# naming that style variable as 
+# W.Tbutton (TButton is used for ttk.Button).
+style.configure('W.TButton', font =
+			('calibri', 10, 'bold', 'underline'),
+				foreground = 'red')
 
-	# plotting the graph 
-	plot1.plot(y) 
+# Style will be reflected only on 
+# this button because we are providing
+# style only on this Button.
+''' Button 1'''
+btn1 = Button(root, text = 'Quit !', 
+				bootstyle="success",
+			command = root.destroy)
+btn1.grid(row = 0, column = 3, padx = 100)
 
-	# creating the Tkinter canvas 
-	# containing the Matplotlib figure 
-	canvas = FigureCanvasTkAgg(fig, 
-							master = window) 
-	canvas.draw() 
+''' Button 2'''
 
-	# placing the canvas on the Tkinter window 
-	canvas.get_tk_widget().pack() 
+btn2 = Button(root, text = 'Click me !', command = None)
+btn2.grid(row = 1, column = 3, pady = 10, padx = 100)
 
-	# creating the Matplotlib toolbar 
-	toolbar = NavigationToolbar2Tk(canvas, 
-								window) 
-	toolbar.update() 
-
-	# placing the toolbar on the Tkinter window 
-	canvas.get_tk_widget().pack() 
-
-# the main Tkinter window 
-window = Tk() 
-
-# setting the title 
-window.title('Plotting in Tkinter') 
-
-# dimensions of the main window 
-window.geometry("500x500") 
-
-# button that displays the plot 
-plot_button = Button(master = window, 
-					command = plot, 
-					height = 2, 
-					width = 10, 
-					text = "Plot") 
-
-# place the button 
-# in main window 
-plot_button.pack() 
-
-# run the gui 
-window.mainloop() 
+# Execute Tkinter
+root.mainloop()

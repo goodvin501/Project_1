@@ -1,6 +1,6 @@
 from ux.ErrorWindow import ErrorWindow
 from ux.ExpenseInputWindow import ExpenseInputWindow
-from ux.PieChartWindow import PieCahrt
+from ux.PieChartWindow import PieChartWindow
 
 import tkinter as tk
 import ttkbootstrap as ttk
@@ -38,6 +38,14 @@ class MainWindow(ttk.Window):
             command=self.show_expenses_per_cat
         )
         self.button_expenses_per_cat.place(x=20, y=625, width=270)
+
+
+        self.button_exit = ttk.Button(
+            self,
+            text="Exit",
+            command=self.button_exit_pressed
+        )
+        self.button_exit.place(x=300, y=625, width=270)
 
 
         self.list_of_expenses = tk.Listbox(self)
@@ -79,6 +87,9 @@ class MainWindow(ttk.Window):
         for el in lst:
             self.expenses.delete_expense(id=el.values[0])
 
+    def button_exit_pressed(self):
+        exit()
+
     def show_expenses_per_cat(self):
         self.exp_per_cat = []
         self.labels = []
@@ -89,4 +100,4 @@ class MainWindow(ttk.Window):
             for el in lst:
                 exp =  exp + el[0]
             self.exp_per_cat.append(exp)
-        self.pie_chart_window = PieCahrt(sizes=self.exp_per_cat, labels=self.labels)
+        self.pie_chart_window = PieChartWindow(sizes=self.exp_per_cat, labels=self.labels)
