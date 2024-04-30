@@ -88,7 +88,7 @@ class MainWindow(ttk.Window):
             self.expenses.delete_expense(id=el.values[0])
 
     def button_exit_pressed(self):
-        exit()
+        self.destroy()
 
     def show_expenses_per_cat(self):
         self.exp_per_cat = []
