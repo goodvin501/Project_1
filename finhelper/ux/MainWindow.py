@@ -13,7 +13,7 @@ class MainWindow(ttk.Window):
         super().__init__()
         self.colors = self.style.colors
         self.expenses = expenses
-        self.config(width=750, height=700)
+        self.config(width=900, height=700)
         self.title("Finance Tracker")
         self.label_your_expenses = ttk.Label(text='Your Expenses:', font=('TkDefaultFont', 20, 'bold'))
         self.label_your_expenses.place(x=20, y=20)
@@ -52,12 +52,14 @@ class MainWindow(ttk.Window):
         self.list_of_expenses.place(x=20, y=50)
 
         self.coldata = [
-            {"text": "ID", "width": 50, "stretch": False},
-            "Desription",
+            #{"text": "№", "width": 50, "stretch": False},
+            {"text": "ID", "width": 0, "stretch": False},
+            {"text": "Desription"},
             {"text": "Amount", "stretch": False},
-            "Category"
+            {"text": "Category"},
+            {"text": "Date", "width": 150, "stretch": False}
         ]
-    
+
         self.dt = Tableview(
             master=self.list_of_expenses,
             coldata=self.coldata,
@@ -68,14 +70,16 @@ class MainWindow(ttk.Window):
             pagesize=25,
             height=25
         )
+
         self.dt.pack(fill=BOTH, expand=YES)
+
 
     def request_expense(self):
         self.created_window = ExpenseInputWindow(self.expenses.get_categories(), callback=self.expense_entered)
 
-    def expense_entered(self, description, amount, category):
+    def expense_entered(self, description, amount, category, date):
         try:
-            self.expenses.add_expense(description, amount, category)
+            self.expenses.add_expense(description, amount, category, date)
             self.dt.insert_row(values=self.expenses.get_all_expenses()[-1])
             self.dt.load_table_data()
             self.created_window.destroy()

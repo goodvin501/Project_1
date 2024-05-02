@@ -9,15 +9,16 @@ class Expenses():
                             (id INTEGER PRIMARY KEY,
                             description TEXT,
                             amount REAL,
-                            category TEXT)''')
+                            category TEXT,
+                            date TEXT)''')
         self.conn.commit()
 
-    def add_expense(self, description, amount, category):
-        self.expense_validate(description, amount, category)
-        self.cursor.execute("INSERT INTO expenses (description, amount, category) VALUES (?, ?, ?)", (description, amount, category))
+    def add_expense(self, description, amount, category, date):
+        self.expense_validate(description, amount, category, date)
+        self.cursor.execute("INSERT INTO expenses (description, amount, category, date) VALUES (?, ?, ?, ?)", (description, amount, category, date))
         self.conn.commit()
 
-    def expense_validate(self, description, amount, category):
+    def expense_validate(self, description, amount, category, date):
         try:
             self.amount_f = float(amount)
         except ValueError:
