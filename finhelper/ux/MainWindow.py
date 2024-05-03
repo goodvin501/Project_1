@@ -52,7 +52,7 @@ class MainWindow(ttk.Window):
         self.list_of_expenses.place(x=20, y=50)
 
         self.coldata = [
-            #{"text": "№", "width": 50, "stretch": False},
+            {"text": "№", "width": 50, "stretch": False},
             {"text": "ID", "width": 0, "stretch": False},
             {"text": "Desription"},
             {"text": "Amount", "stretch": False},
@@ -63,14 +63,14 @@ class MainWindow(ttk.Window):
         self.dt = Tableview(
             master=self.list_of_expenses,
             coldata=self.coldata,
-            rowdata=self.expenses.get_all_expenses(),
+            #rowdata=self.expenses.get_all_expenses(),
             paginated=True,
             searchable=True,
             bootstyle=PRIMARY,
             pagesize=25,
             height=25
         )
-
+        self.reload_table_data()
         self.dt.pack(fill=BOTH, expand=YES)
 
 
@@ -80,16 +80,18 @@ class MainWindow(ttk.Window):
     def expense_entered(self, description, amount, category, date):
         try:
             self.expenses.add_expense(description, amount, category, date)
-            self.dt.insert_row(values=self.expenses.get_all_expenses()[-1])
-            self.dt.load_table_data()
+            #self.dt.insert_row(values=self.expenses.get_all_expenses()[-1])
+            #self.dt.load_table_data()
+            self.reload_table_data()
             self.created_window.destroy()
         except Exception as err:
             self.error_window = ErrorWindow(err)
     def delete_expense(self):
         lst = self.dt.get_rows(selected=True)
-        self.dt.delete_rows(iids=list(map(lambda el: el.iid, lst)))
+        #self.dt.delete_rows(iids=list(map(lambda el: el.iid, lst)))
         for el in lst:
-            self.expenses.delete_expense(id=el.values[0])
+            self.expenses.delete_expense(id=el.values[1])
+        self.reload_table_data()
 
     def button_exit_pressed(self):
         self.destroy()
@@ -105,3 +107,12 @@ class MainWindow(ttk.Window):
                 exp =  exp + el[0]
             self.exp_per_cat.append(exp)
         self.pie_chart_window = PieChartWindow(sizes=self.exp_per_cat, labels=self.labels)
+    
+    def reload_table_data(self):
+        i = 1
+        self.dt.delete_rows()
+        for expense in self.expenses.get_all_expenses():
+            tup = (i, ) + expense
+            self.dt.insert_row(values=tup)
+            i += 1
+        self.dt.load_table_data()
