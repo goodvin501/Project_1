@@ -13,7 +13,8 @@ class MainWindow(ttk.Window):
         super().__init__()
         self.colors = self.style.colors
         self.expenses = expenses
-        self.config(width=900, height=700)
+        self.config(width=850, height=700)
+        self.resizable(0, 0)
         self.title("Finance Tracker")
         self.label_your_expenses = ttk.Label(text='Your Expenses:', font=('TkDefaultFont', 20, 'bold'))
         self.label_your_expenses.place(x=20, y=20)
