@@ -64,7 +64,6 @@ class MainWindow(ttk.Window):
         self.dt = Tableview(
             master=self.list_of_expenses,
             coldata=self.coldata,
-            #rowdata=self.expenses.get_all_expenses(),
             paginated=True,
             searchable=True,
             bootstyle=PRIMARY,
@@ -81,15 +80,12 @@ class MainWindow(ttk.Window):
     def expense_entered(self, description, amount, category, date):
         try:
             self.expenses.add_expense(description, amount, category, date)
-            #self.dt.insert_row(values=self.expenses.get_all_expenses()[-1])
-            #self.dt.load_table_data()
             self.reload_table_data()
             self.created_window.destroy()
         except Exception as err:
             self.error_window = ErrorWindow(err)
     def delete_expense(self):
         lst = self.dt.get_rows(selected=True)
-        #self.dt.delete_rows(iids=list(map(lambda el: el.iid, lst)))
         for el in lst:
             self.expenses.delete_expense(id=el.values[1])
         self.reload_table_data()
