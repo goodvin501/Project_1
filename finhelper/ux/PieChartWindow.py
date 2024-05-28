@@ -63,7 +63,7 @@ class PieChartWindow(tk.Toplevel):
         plt.rcParams["figure.autolayout"] = True
 
         self.fig, ax = plt.subplots()
-        ax.pie(self.sizes, labels=self.labels, autopct=lambda p: '{:.1f} ({:.0f}%)'.format(p, p * sum(self.sizes) / 100))
+        ax.pie(self.sizes, labels=self.labels, autopct=lambda p: '{:.1f}% ({:.0f})'.format(p, p * sum(self.sizes) / 100))
 
         self.canvas = FigureCanvasTkAgg(self.fig, 
 							master = self) 
