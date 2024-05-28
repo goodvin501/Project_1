@@ -94,16 +94,10 @@ class MainWindow(ttk.Window):
         self.destroy()
 
     def show_expenses_per_cat(self):
-        self.exp_per_cat = []
-        self.labels = []
-        for cat in self.expenses.get_categories():
-            self.labels.append(cat[0])
-            exp = 0
-            lst = self.expenses.get_expenses_per_category(cat[0])
-            for el in lst:
-                exp =  exp + el[0]
-            self.exp_per_cat.append(exp)
-        self.pie_chart_window = PieChartWindow(sizes=self.exp_per_cat, labels=self.labels)
+        self.exp = []
+        for expense in self.expenses.get_all_expenses():
+            self.exp.append(expense)
+        self.pie_chart_window = PieChartWindow(self.exp)
     
     def reload_table_data(self):
         i = 1

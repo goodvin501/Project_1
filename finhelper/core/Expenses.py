@@ -39,6 +39,6 @@ class Expenses():
         return self.cursor.fetchall()
     
     def get_expenses_per_category(self, category):
-        self.cursor.execute("SELECT amount FROM expenses WHERE category = ?;", [category])
+        self.cursor.execute("SELECT * FROM expenses WHERE category = ?;", [category])
         return self.cursor.fetchall()
         

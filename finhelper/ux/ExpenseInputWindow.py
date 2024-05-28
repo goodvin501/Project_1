@@ -46,7 +46,6 @@ class ExpenseInputWindow(tk.Toplevel):
         self.label_date.place(x=20, y=110)
         self.date_entry = DateEntry(master=self, firstweekday=0, dateformat='%Y-%m-%d')
         self.date_entry.place(x=100, y=110, width=260)
-        self.date_entry.configure(state='readonly')
 
         #submit button
         self.button_submit = ttk.Button(
